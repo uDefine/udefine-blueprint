@@ -139,6 +139,8 @@ gulp.task('copy-vendor', ->
 			.pipe(plugins.rev())
 			.pipe(gulp.dest(destinations.js))
 	else
+		
+		task.pipe(plugins.rev())
 		task.pipe(gulp.dest(destinations.libs))
 		
 )
@@ -156,6 +158,7 @@ gulp.task('index', ->
 	plugins.util.log(_injectPaths)
 
 	_injectPaths.push(destinations.assets + '/**/*.*')
+	_injectPaths.push(destinations.libs + '/**/*.*')
 
 	plugins.util.log(_injectPaths)
 	
@@ -193,22 +196,4 @@ gulp.task('build', ->
 
 gulp.task('default', ['build'], ->
 	runSequence(['watch'])
-)
-
-
-gulp.task('revision', ->
-	gulp.src([destinations.css + '/**/*.css', destinations.js + '/**/*.js'])
-		.pipe(plugins.rev())
-		.pipe(gulp.dest(destinations.assets))
-		.pipe(plugins.rev.manifest())
-		.pipe(plugins.revReplace())
-		.pipe(gulp.dest(destinations.assets))
-)
-
-gulp.task("revreplace", ->
-	manifest = gulp.src(destinations.assets + "/rev-manifest.json");
-
-	gulp.src(destinations.index + "/index.html")
-		.pipe(plugins.revReplace({manifest: manifest}))
-		.pipe(gulp.dest(destinations.index))
 )
