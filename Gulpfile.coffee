@@ -84,6 +84,7 @@ gulp.task('sass', ->
 		))
 		.pipe(plugins.autoprefixer()) # defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
 		.pipe(if isDist then plugins.minifyCss() else plugins.util.noop())
+		.pipe(plugins.rev())
 		.pipe(gulp.dest(destinations.css))
 		.on('end', ->
 			plugins.notify().write('Sass compiled')
@@ -107,6 +108,7 @@ gulp.task('templates', ->
 			standalone: true
 		))
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
+		.pipe(plugins.rev())
 		.pipe(gulp.dest(destinations.js))
 		.on('end', ->
 			plugins.notify().write('Templates compiled')
@@ -126,6 +128,7 @@ gulp.task('coffee', ->
 		))
 		.pipe(plugins.ngAnnotate())
 		.pipe(plugins.concat('app.js'))
+		.pipe(plugins.rev())
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
 )
