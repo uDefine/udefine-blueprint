@@ -108,7 +108,6 @@ gulp.task('templates', ->
 			standalone: true
 		))
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
-		.pipe(plugins.rev())
 		.pipe(gulp.dest(destinations.js))
 		.on('end', ->
 			plugins.notify().write('Templates compiled')
@@ -128,7 +127,6 @@ gulp.task('coffee', ->
 		))
 		.pipe(plugins.ngAnnotate())
 		.pipe(plugins.concat('app.js'))
-		.pipe(plugins.rev())
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
 )
@@ -138,6 +136,7 @@ gulp.task('copy-vendor', ->
 	if isDist
 		task.pipe(plugins.uglify())
 			.pipe(plugins.concat('vendors.js'))
+			.pipe(plugins.rev())
 			.pipe(gulp.dest(destinations.js))
 	else
 		task.pipe(gulp.dest(destinations.libs))
@@ -152,13 +151,22 @@ gulp.task('copy-assets', ->
 gulp.task('index', ->
 	target = gulp.src(globs.index)
 	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
+
+
+	plugins.util.log(_injectPaths)
+
+	_injectPaths.push(destinations.assets + '/**/*.*')
+
+	plugins.util.log(_injectPaths)
 	
-	target.pipe(
-		plugins.inject(gulp.src(_injectPaths, { read: false} ), {
-			ignorePath: outputFolder
-			addRootSlash: false
-		})
-	).pipe(gulp.dest(destinations.index))
+	target
+		.pipe(
+			plugins.inject(gulp.src(_injectPaths, { read: false} ), {
+				ignorePath: outputFolder
+				addRootSlash: false
+			})
+		)
+		.pipe(gulp.dest(destinations.index))
 )
 
 
@@ -179,10 +187,28 @@ gulp.task('build', ->
 	runSequence(
 		'clean',
 		['sass', 'copy-assets', 'coffee', 'templates', 'copy-vendor'],
-		'index'
+		['index']
 	)
 )
 
 gulp.task('default', ['build'], ->
 	runSequence(['watch'])
+)
+
+
+gulp.task('revision', ->
+	gulp.src([destinations.css + '/**/*.css', destinations.js + '/**/*.js'])
+		.pipe(plugins.rev())
+		.pipe(gulp.dest(destinations.assets))
+		.pipe(plugins.rev.manifest())
+		.pipe(plugins.revReplace())
+		.pipe(gulp.dest(destinations.assets))
+)
+
+gulp.task("revreplace", ->
+	manifest = gulp.src(destinations.assets + "/rev-manifest.json");
+
+	gulp.src(destinations.index + "/index.html")
+		.pipe(plugins.revReplace({manifest: manifest}))
+		.pipe(gulp.dest(destinations.index))
 )
