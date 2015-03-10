@@ -1,7 +1,9 @@
+'use strict'
+
 gulp = require('gulp')
 plugins = require('gulp-load-plugins')()
 
-## Variables
+# Variables
 isDist = plugins.util.env.type is 'dist'
 outputFolder = if isDist then 'dist' else 'build'
 
@@ -14,12 +16,12 @@ globs =
 	index: 'src/index.html'
 
 destinations =
-	sass: outputFolder + '/assets/css'
+	css: outputFolder + '/assets/css'
 	js: outputFolder + '/assets/js'
 	assets: outputFolder + '/assets'
 	index: outputFolder
 
-vendorLibs =
+vendorLibs = {
 	'bower_components/angular/angular.js'
 	'bower_components/angular-resource/angular-resource.js'
 	'bower_components/angular-animate/angular-animate.js'
@@ -29,6 +31,15 @@ vendorLibs =
 	'bower_components/angular-materialize/src/angular-materialize.js'
 	'bower_components/jquery/dist/jquery.js'
 	'bower_components/materialize/dist/js/materialize.js'
+}
+
+injectLibsPaths = 
+	dev: []
+	dist: []
+
+injectPaths = 
+	dev: []
+	dist: []
 
 ## Tasks
 
@@ -50,7 +61,7 @@ gulp.task('templates', ->
 			plugins.notify().write(error)
 			this.emit('end')
 		))
-		.pipe(plugins.angularTemplateCache(
+		.pipe(plugins.angularTemplatecache(
 			module: 'app.template'
 			root: '/templates'
 			standalone: true
@@ -61,7 +72,7 @@ gulp.task('templates', ->
 
 gulp.task('coffee', ->
 	gulp.src(globs.coffee)
-		.pipe(plugins.coffe(
+		.pipe(plugins.coffee(
 			bare: true
 		).on('error', (error) ->
 			plugins.notify().write(error)
@@ -71,3 +82,10 @@ gulp.task('coffee', ->
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
 )
+
+gulp.task('index', ->
+	target = gulp.src(globs.index)
+	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
+)
+
+gulp.task('default', ['templates', 'sass', 'coffee'])
