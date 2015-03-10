@@ -154,14 +154,9 @@ gulp.task('index', ->
 	target = gulp.src(globs.index)
 	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
 
-
-	plugins.util.log(_injectPaths)
-
 	_injectPaths.push(destinations.assets + '/**/*.*')
 	_injectPaths.push(destinations.libs + '/**/*.*')
 
-	plugins.util.log(_injectPaths)
-	
 	target
 		.pipe(
 			plugins.inject(gulp.src(_injectPaths, { read: false} ), {
