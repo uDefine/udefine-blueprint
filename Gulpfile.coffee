@@ -78,11 +78,19 @@ gulp.task('sass', ->
 	gulp.src(globs.sass)
 		.pipe(plugins.sass(
 			style: 'compressed'
-			errLogToConsole: true
+		).on('error', (error) ->
+			plugins.notify().write(error)
+			this.emit('end')
 		))
 		.pipe(plugins.autoprefixer()) # defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
 		.pipe(if isDist then plugins.minifyCss() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.css))
+		.on('end', ->
+			plugins.notify().write('Sass compiled')
+		)
+		.on('error', (error) ->
+			plugins.notify().write(error)
+		)
 )
 
 gulp.task('templates', ->
@@ -100,6 +108,13 @@ gulp.task('templates', ->
 		))
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
+		.on('end', ->
+			plugins.notify().write('Templates compiled')
+		)
+		.on('error', (error) ->
+			plugins.notify().write(error)
+		)
+
 )
 
 gulp.task('coffee', ->
@@ -119,7 +134,7 @@ gulp.task('copy-vendor', ->
 	gulp.src(if isDist then vendorLibsMin else vendorLibs)
 		.pipe(if !isDist then gulp.dest(destinations.libs) else plugins.util.noop())
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop()) ## ng annotate?
-		.pipe(plugins.concat('vendors.js'))
+		.pipe(if isDist then plugins.concat('vendors.js') else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
 )
 
