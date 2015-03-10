@@ -1,0 +1,10 @@
+{
+  "name": "udefine-blueprint",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mwagena/udefine-blueprint",
+  "authors": [
+    "Martijn Wagena <martijn@wagena.com>",
+    "Erick Martijn Bouma <erickmartijn@gmail.com>"
+  ],
+  "license": "MIT"
+}
