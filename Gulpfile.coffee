@@ -131,11 +131,14 @@ gulp.task('coffee', ->
 )
 
 gulp.task('copy-vendor', ->
-	gulp.src(if isDist then vendorLibsMin else vendorLibs)
-		.pipe(if !isDist then gulp.dest(destinations.libs) else plugins.util.noop())
-		.pipe(if isDist then plugins.uglify() else plugins.util.noop()) ## ng annotate?
-		.pipe(if isDist then plugins.concat('vendors.js') else plugins.util.noop())
-		.pipe(gulp.dest(destinations.js))
+	task = gulp.src(if isDist then vendorLibsMin else vendorLibs)
+	if isDist
+		task.pipe(plugins.uglify())
+			.pipe(plugins.concat('vendors.js'))
+			.pipe(gulp.dest(destinations.js))
+	else
+		task.pipe(gulp.dest(destinations.libs))
+		
 )
 
 gulp.task('copy-assets', ->
