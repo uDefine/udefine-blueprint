@@ -3,7 +3,7 @@
 gulp = require('gulp')
 plugins = require('gulp-load-plugins')()
 
-# Variables
+## Variables
 isDist = plugins.util.env.type is 'dist'
 outputFolder = if isDist then 'dist' else 'build'
 
@@ -86,6 +86,15 @@ gulp.task('coffee', ->
 gulp.task('index', ->
 	target = gulp.src(globs.index)
 	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
+
+	target.pipe(
+		plugins.inject(gulp.src(_injectPaths,
+			read: false
+		),
+			ignorePath: outputFolder
+			addRootSlash: false
+		)
+	).pipe(gulp.dest(destinations.index))
 )
 
-gulp.task('default', ['templates', 'sass', 'coffee'])
+gulp.task('default', ['templates', 'sass', 'coffee', 'index'])
