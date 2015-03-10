@@ -1,0 +1,34 @@
+<!doctype html>
+<html ng-app="app" ng-strict-di>
+	<head>
+		<title>uDefine Boilertplate</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta content="width=device-width, user-scalable=no, initial-scale=1" name="viewport" />
+		<!-- inject:css -->
+		<!-- endinject -->
+		<script>
+		var $buoop = { vs: { i: 8, f: 15, o: 12.1, s: 5.1 }, c: 2 };
+		function $buo_f() {
+		var e = document.createElement("script");
+		e.src = "//browser-update.org/update.js";
+		document.body.appendChild(e);
+		};
+		try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
+		catch (e) { window.attachEvent("onload", $buo_f) }
+		</script>
+		<!-- inject:js -->
+		<!-- endinject -->
+		<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-64.png">
+		<link rel="icon" href="assets/images/favicon-64.png">
+
+		<!--[if lt IE 9]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+		<![endif]-->
+		<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div ui-view></div>
+	</body>
+</html>
