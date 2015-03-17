@@ -4,8 +4,12 @@ gulp = require('gulp')
 plugins = require('gulp-load-plugins')()
 del = require('del')
 
+fs      = require('fs')
+through = require('through2')
+
 runSequence = require('run-sequence')
 browserSync = require('browser-sync')
+revReplace = require('gulp-rev-replace')
 
 ## Variables
 isDist = plugins.util.env.type is 'dist'
@@ -84,7 +88,7 @@ gulp.task('sass', ->
 		))
 		.pipe(plugins.autoprefixer()) # defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
 		.pipe(if isDist then plugins.minifyCss() else plugins.util.noop())
-		.pipe(plugins.rev())
+		# .pipe(plugins.rev())
 		.pipe(gulp.dest(destinations.css))
 		.on('end', ->
 			plugins.notify().write('Sass compiled')
@@ -136,11 +140,11 @@ gulp.task('copy-vendor', ->
 	if isDist
 		task.pipe(plugins.uglify())
 			.pipe(plugins.concat('vendors.js'))
-			.pipe(plugins.rev())
+			# .pipe(plugins.rev())
 			.pipe(gulp.dest(destinations.js))
 	else
 		
-		task.pipe(plugins.rev())
+		# task.pipe(plugins.rev())
 		task.pipe(gulp.dest(destinations.libs))
 		
 )
@@ -154,12 +158,9 @@ gulp.task('index', ->
 	target = gulp.src(globs.index)
 	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
 
-	_injectPaths.push(destinations.assets + '/**/*.*')
-	_injectPaths.push(destinations.libs + '/**/*.*')
-
 	target
 		.pipe(
-			plugins.inject(gulp.src(_injectPaths, { read: false} ), {
+			plugins.inject(gulp.src(_injectPaths, {read: false} ), {
 				ignorePath: outputFolder
 				addRootSlash: false
 			})
@@ -182,13 +183,57 @@ gulp.task('watch', ->
 )
 
 gulp.task('build', ->
-	runSequence(
-		'clean',
-		['sass', 'copy-assets', 'coffee', 'templates', 'copy-vendor'],
-		['index']
-	)
+	
+	if isDist
+
+		runSequence(
+			'clean'
+			['sass', 'copy-assets', 'coffee', 'templates', 'copy-vendor']
+			['index', 'revision']
+			'revreplace'
+		)
+	else
+
+		runSequence(
+			'clean'
+			['sass', 'copy-assets', 'coffee', 'templates', 'copy-vendor']
+			'index'
+		)
 )
 
 gulp.task('default', ['build'], ->
 	runSequence(['watch'])
 )
+
+gulp.task('revision', ->
+
+	gulp.src([outputFolder + '/**/*.css', outputFolder + '/**/*.js'])
+		.pipe(plugins.rev())
+		.pipe(gulp.dest(outputFolder))
+		.pipe(rmOrig())
+		.pipe(plugins.rev.manifest())
+		.pipe(gulp.dest(outputFolder))
+)
+
+gulp.task('revreplace', ->
+
+	manifest = gulp.src('./' + outputFolder + '/rev-manifest.json')
+	
+	gulp.src(outputFolder + '/index.html')
+		.pipe(revReplace({manifest: manifest}))
+		.pipe(gulp.dest(outputFolder))
+)
+
+
+rmOrig = ->
+	through.obj((file, enc, cb) ->
+
+		if file.revOrigPath
+			plugins.util.log(plugins.util.colors.red('DELETING'), file.revOrigPath)
+			fs.unlink(file.revOrigPath, (error) ->
+				plugins.notify().write(error)
+			)
+
+		@push(file) # Pass file when you're done
+		cb() # notify through2 you're done
+	)
