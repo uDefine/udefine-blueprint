@@ -40,7 +40,7 @@ vendorLibs = [
 	'bower_components/angular-ui-router/release/angular-ui-router.js'
 	'bower_components/angular-i18n/angular-locale_nl-nl.js'
 	'bower_components/angular-materialize/src/angular-materialize.js'
-	'bower_components/jquery/dist/jqueyr.js'
+	'bower_components/jquery/dist/jquery.js'
 	'bower_components/materialize/dist/js/materialize.js'
 ]
 
