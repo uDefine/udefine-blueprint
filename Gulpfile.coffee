@@ -140,6 +140,7 @@ gulp.task('coffee', ->
 			bare: true
 		).on('error', (error) ->
 			plugins.notify().write(error)
+			this.emit('end')
 		))
 		.pipe(plugins.ngAnnotate())
 		.pipe(if isDist then plugins.concat('app.js') else plugins.util.noop())
