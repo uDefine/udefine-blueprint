@@ -1,4 +1,4 @@
 controllers.controller('Page1Controller', ($scope) ->
 	
-	$scope.welcome = 'hoi'
+	$scope.welcome = 'hoi22'
 )
