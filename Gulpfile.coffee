@@ -196,9 +196,10 @@ gulp.task('watch', ['browser-sync'], ->
 	gulp.watch(globs.index, ['index'])
 	gulp.watch(globs.assets, ['copy-assets'])
 
-	gulp.watch 'build/**/*', (file) ->
-    if file.type == 'changed'
-   		browserSync.reload(file.path)
+	gulp.watch('build/**/*', (file) ->
+    	if file.type == 'changed'
+   			browserSync.reload(file.path)
+   	)
 )
 
 gulp.task('build', ->
