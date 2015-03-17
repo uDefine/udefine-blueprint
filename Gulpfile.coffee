@@ -98,7 +98,6 @@ gulp.task('sass', ->
 		))
 		.pipe(plugins.autoprefixer()) # defauls to > 1%, last 2 versions, Firefox ESR, Opera 12.1
 		.pipe(if isDist then plugins.minifyCss() else plugins.util.noop())
-		# .pipe(plugins.rev())
 		.pipe(gulp.dest(destinations.css))
 		.on('end', ->
 			plugins.notify().write('Sass compiled')
@@ -150,11 +149,8 @@ gulp.task('copy-vendor', ->
 	if isDist
 		task.pipe(plugins.uglify())
 			.pipe(plugins.concat('vendors.js'))
-			# .pipe(plugins.rev())
 			.pipe(gulp.dest(destinations.js))
 	else
-		
-		# task.pipe(plugins.rev())
 		task.pipe(gulp.dest(destinations.libs))
 		
 )
