@@ -3,7 +3,7 @@
 angular.module('app', [
 	'ngResource'
 	'ngSanitize'
-	'ngCookies'
+	# 'ngCooskies'
 	'ngAnimate'
 
 	'ui.router'
@@ -22,7 +22,7 @@ angular.module('app', [
 	.config(($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) ->
 
 			$httpProvider.interceptors.push('httpInterceptor')
-			$urlRouterProvider.otherwise('/inloggen')
+			$urlRouterProvider.otherwise('/page1')
 
 			$locationProvider.html5Mode(
 				enabled: false
@@ -36,7 +36,6 @@ angular.module('app', [
 				## Admin routing ##
 				.state('app',
 					url: '/'
-					# abstract: true
 					views:
 						'header':
 							templateUrl: '/templates/header.html'
@@ -46,7 +45,7 @@ angular.module('app', [
 
 				)
 				.state('app.page1',
-					url: '/:page'
+					url: '/page1'
 					views:
 						'body@':
 							templateUrl: '/templates/page1/page.html'

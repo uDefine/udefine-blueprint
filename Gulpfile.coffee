@@ -36,6 +36,7 @@ vendorLibs = [
 	'bower_components/angular-resource/angular-resource.js'
 	'bower_components/angular-animate/angular-animate.js'
 	'bower_components/angular-sanitize/angular-sanitize.js'
+	'bower_components/angular-cookies/angular-cookies.js'
 	'bower_components/angular-ui-router/release/angular-ui-router.js'
 	'bower_components/angular-i18n/angular-locale_nl-nl.js'
 	'bower_components/angular-materialize/src/angular-materialize.js'
