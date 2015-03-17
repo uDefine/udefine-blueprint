@@ -140,7 +140,7 @@ gulp.task('coffee', ->
 			plugins.notify().write(error)
 		))
 		.pipe(plugins.ngAnnotate())
-		.pipe(plugins.concat('app.js'))
+		.pipe(if isDist then plugins.concat('app.js') else plugins.util.noop())
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
 )
@@ -171,6 +171,9 @@ gulp.task('index', ->
 	opts =
 		quotes: true
 		conditionals: true
+
+	_injectPaths.push(destinations.assets + '/**/*.*')
+	_injectPaths.push(destinations.libs + '/**/*.*')
 
 	target
 		.pipe(
