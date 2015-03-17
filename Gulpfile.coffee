@@ -168,6 +168,10 @@ gulp.task('index', ->
 	target = gulp.src(globs.index)
 	_injectPaths = if isDist then injectPaths.dist else injectPaths.dev
 
+	opts =
+		quotes: true
+		conditionals: true
+
 	target
 		.pipe(
 			plugins.inject(gulp.src(_injectPaths, {read: false} ), {
@@ -175,6 +179,7 @@ gulp.task('index', ->
 				addRootSlash: false
 			})
 		)
+		.pipe(if isDist then plugins.minifyHtml(opts) else plugins.util.noop())
 		.pipe(gulp.dest(destinations.index))
 )
 
