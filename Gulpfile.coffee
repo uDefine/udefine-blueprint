@@ -196,7 +196,7 @@ gulp.task('clean', (cb) ->
 gulp.task('watch', ['browser-sync'], ->
 	gulp.watch(globs.sass, ['sass'])
 	gulp.watch(globs.coffee, ['watch-coffee'])
-	gulp.watch(globs.templates, ['templates'])
+	gulp.watch([globs.templates, 'src/app/*.jade'], ['templates'])
 	gulp.watch(globs.index, ['index'])
 	gulp.watch(globs.assets, ['copy-assets'])
 
