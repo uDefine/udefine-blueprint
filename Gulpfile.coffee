@@ -74,6 +74,16 @@ for env in ['dev', 'dist']
 
 ## Tasks
 
+gulp.task 'browser-sync', ->
+  browserSync
+    server:
+      baseDir: [
+        'build'
+      ]
+    debugInfo: false
+    host: 'localhost'
+    watchOptions: debounceDelay: 1000
+
 gulp.task('sass', ->
 	gulp.src(globs.sass)
 		.pipe(plugins.sass(
@@ -172,13 +182,16 @@ gulp.task('clean', (cb) ->
 	del(['dist/', 'build/'], cb)
 )
 
-gulp.task('watch', ->
+gulp.task('watch', ['browser-sync'], ->
 	gulp.watch(globs.sass, ['sass'])
 	gulp.watch(globs.coffee, ['coffee'])
 	gulp.watch(globs.templates, ['templates'])
 	gulp.watch(globs.index, ['index'])
 	gulp.watch(globs.assets, ['copy-assets'])
 
+	gulp.watch 'build/**/*', (file) ->
+    if file.type == 'changed'
+   		browserSync.reload(file.path)
 )
 
 gulp.task('build', ->
