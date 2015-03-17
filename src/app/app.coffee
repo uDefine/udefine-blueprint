@@ -3,7 +3,7 @@
 angular.module('app', [
 	'ngResource'
 	'ngSanitize'
-	# 'ngCooskies'
+	'ngCookies'
 	'ngAnimate'
 
 	'ui.router'
