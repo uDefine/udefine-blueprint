@@ -118,7 +118,7 @@ gulp.task('templates', ->
 			this.emit('end')
 		))
 		.pipe(plugins.angularTemplatecache(
-			module: 'app.template'
+			module: 'app.templates'
 			root: '/templates'
 			standalone: true
 		))
@@ -134,6 +134,7 @@ gulp.task('templates', ->
 )
 
 gulp.task('coffee', ->
+
 	gulp.src(globs.coffee)
 		.pipe(plugins.coffee(
 			bare: true
@@ -144,6 +145,7 @@ gulp.task('coffee', ->
 		.pipe(if isDist then plugins.concat('app.js') else plugins.util.noop())
 		.pipe(if isDist then plugins.uglify() else plugins.util.noop())
 		.pipe(gulp.dest(destinations.js))
+
 )
 
 gulp.task('copy-vendor', ->
@@ -170,8 +172,9 @@ gulp.task('index', ->
 		quotes: true
 		conditionals: true
 
-	_injectPaths.push(destinations.assets + '/**/*.*')
+	_injectPaths.push(destinations.assets + '/**/***/*.*')
 	_injectPaths.push(destinations.libs + '/**/*.*')
+
 
 	target
 		.pipe(
@@ -182,6 +185,7 @@ gulp.task('index', ->
 		)
 		.pipe(if isDist then plugins.minifyHtml(opts) else plugins.util.noop())
 		.pipe(gulp.dest(destinations.index))
+
 )
 
 
@@ -191,7 +195,7 @@ gulp.task('clean', (cb) ->
 
 gulp.task('watch', ['browser-sync'], ->
 	gulp.watch(globs.sass, ['sass'])
-	gulp.watch(globs.coffee, ['coffee'])
+	gulp.watch(globs.coffee, ['watch-coffee'])
 	gulp.watch(globs.templates, ['templates'])
 	gulp.watch(globs.index, ['index'])
 	gulp.watch(globs.assets, ['copy-assets'])
@@ -201,6 +205,8 @@ gulp.task('watch', ['browser-sync'], ->
    			browserSync.reload(file.path)
    	)
 )
+
+gulp.task('watch-coffee', -> runSequence(['coffee'], ['index']))
 
 gulp.task('build', ->
 	
