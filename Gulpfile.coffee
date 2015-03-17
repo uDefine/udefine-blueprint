@@ -74,15 +74,16 @@ for env in ['dev', 'dist']
 
 ## Tasks
 
-gulp.task 'browser-sync', ->
-  browserSync
-    server:
-      baseDir: [
-        'build'
-      ]
-    debugInfo: false
-    host: 'localhost'
-    watchOptions: debounceDelay: 1000
+gulp.task('browser-sync', ->
+	browserSync
+		server:
+			baseDir: [
+				'build'
+			]
+		debugInfo: false
+		host: 'localhost'
+		watchOptions: debounceDelay: 1000
+)
 
 gulp.task('sass', ->
 	gulp.src(globs.sass)
