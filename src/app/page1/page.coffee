@@ -1,4 +1,3 @@
-controllers.controller('Page1Controller', ($scope) ->
-	
-	$scope.welcome = 'hoi22'
+controllers.controller('DashboardCtrl', ($scope) ->
+
 )

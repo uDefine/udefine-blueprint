@@ -2,6 +2,21 @@
 // - - layout
 // global layout classes - height, width, padding, margin, etc.
 
+$background: #eee;
+
 body {
-	background:#eee;
+	background:$background;
+}
+
+// header {
+// 	background:#444;
+// 	height:50px;
+// 	color:#fff;
+// 	line-height:50px;
+// 	font-weight:bold;
+// 	padding:0 15px;
+// }
+
+.wrapper {
+	padding:10px 15px;
 }
