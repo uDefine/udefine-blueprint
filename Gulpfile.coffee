@@ -202,9 +202,9 @@ gulp.task('watch', ['browser-sync'], ->
 	gulp.watch(globs.assets, ['copy-assets'])
 
 	gulp.watch('build/**/*', (file) ->
-    	if file.type == 'changed'
-   			browserSync.reload(file.path)
-   	)
+		if file.type == 'changed'
+			browserSync.reload(file.path)
+	)
 )
 
 gulp.task('watch-coffee', -> runSequence(['coffee'], ['index']))
