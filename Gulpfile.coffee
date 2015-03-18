@@ -71,8 +71,8 @@ for lib in vendorLibs
 
 for env in ['dev', 'dist']
 	injectPaths[env] = injectLibsPaths[env].concat([
-		if isDist then destinations.js + '/app.js' else destinations.js + "/app/**/*.js"
 		if isDist then destinations.js + '/vendors.js' else destinations.js + "/app/**/*.js"
+		if isDist then destinations.js + '/app.js' else destinations.js + "/app/**/*.js"
 		destinations.js + '/templates.js'
 		destinations.css + '/app.css'
 	])
