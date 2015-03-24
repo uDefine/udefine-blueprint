@@ -5,7 +5,7 @@ plugins = require('gulp-load-plugins')()
 del = require('del')
 
 fs      = require('fs')
-through = require('through2')
+# through = require('through2')
 
 runSequence = require('run-sequence')
 browserSync = require('browser-sync')

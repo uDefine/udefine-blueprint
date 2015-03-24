@@ -23,14 +23,14 @@ angular.module('app', [
 
 			
 			$httpProvider.interceptors.push('httpInterceptor')
-			$urlRouterProvider.otherwise('/page1')
+			$urlRouterProvider.otherwise('/dashboard')
 
-			$locationProvider.html5Mode(
-				enabled: false
-				requireBase: false
-			)
+			# $locationProvider.html5Mode(
+			# 	enabled: false
+			# 	requireBase: false
+			# )
 
-			$locationProvider.hashPrefix('!')
+			# $locationProvider.hashPrefix('!')
 			
 			$stateProvider
 				.state('app',
@@ -42,11 +42,16 @@ angular.module('app', [
 							templateUrl: '/templates/footer.html'
 				)
 
-				.state('app.page1',
-					url: 'page1'
+				.state('app.dashboard',
+					url: 'dashboard'
 					views:
 						'body@':
-							templateUrl: '/templates/page1/page.html'
-							controller: 'Page1Controller'
+							templateUrl: '/templates/home/home-view.html'
+				)
+				.state('app.stocks',
+					url: 'stocks'
+					views:
+						'body@':
+							templateUrl: '/templates/stocks/stocks-view.html'
 				)
 	)
