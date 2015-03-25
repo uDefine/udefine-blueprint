@@ -1,0 +1,21 @@
+a(ui-sref="app.dashboard").logo Finance<strong>Dash</strong>
+nav#navigation
+	span.title Main
+	ul
+		li
+			a(ui-sref='app.dashboard', ui-sref-active='active') Dashboard
+		li
+			a(ui-sref='app.wallet', ui-sref-active='active') Wallet
+		li
+			a(ui-sref='app.stocks', ui-sref-active='active') Stocks
+	span.title Manage
+	ul
+		li
+			a(ui-sref='app.tags', ui-sref-active='active') Tags
+
+footer#account
+	div.avatar
+			img(ng-img="/assets/default.png")
+	div.user
+		span.name Erick Martijn
+		span.logout Logout

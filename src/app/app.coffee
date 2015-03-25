@@ -20,26 +20,16 @@ angular.module('app', [
 	)
 
 	.config(($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) ->
-
-			
 			$httpProvider.interceptors.push('httpInterceptor')
+
 			$urlRouterProvider.otherwise('/dashboard')
 
-			# $locationProvider.html5Mode(
-			# 	enabled: false
-			# 	requireBase: false
-			# )
-
-			# $locationProvider.hashPrefix('!')
-			
 			$stateProvider
 				.state('app',
 					url: "/"
 					views:
-						'header':
-							templateUrl: '/templates/header.html'
-						'footer':
-							templateUrl: '/templates/footer.html'
+						'sidebar':
+							templateUrl: '/templates/sidebar.html'
 				)
 
 				.state('app.dashboard',
@@ -47,6 +37,30 @@ angular.module('app', [
 					views:
 						'body@':
 							templateUrl: '/templates/home/home-view.html'
+				)
+				.state('app.wallet',
+					url: 'wallet'
+					views:
+						'body@':
+							templateUrl: '/templates/wallet/wallet-overview-view.html'
+				)
+				# .state('app.wallet.overview',
+				# 	url: '/overview'
+				# 	views:
+				# 		'body@':
+				# 			templateUrl: '/templates/wallet/wallet-overview-view.html'
+				# )
+				.state('app.wallet.overview.detail',
+					url: '/detail'
+					views:
+						'body@':
+							templateUrl: '/templates/wallet/wallet-overview-view.html'
+				)
+				.state('app.wallet.goals',
+					url: '/goals'
+					views:
+						'body@':
+							templateUrl: '/templates/wallet/wallet-goals-view.html'
 				)
 				.state('app.stocks',
 					url: 'stocks'

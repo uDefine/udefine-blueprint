@@ -2,21 +2,143 @@
 // - - layout
 // global layout classes - height, width, padding, margin, etc.
 
-$background: #eee;
+@import url(//fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);
+@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
 
+$roboto: 			'Roboto', sans-serif;
+$roboto-condensed:	'Roboto Condensed', sans-serif;
+
+$background: #151519;
+
+html,
+body {
+	height:100%;
+}
 body {
 	background:$background;
+	font-family: $roboto;
+	-webkit-font-smoothing: antialiased;
 }
 
-// header {
-// 	background:#444;
-// 	height:50px;
-// 	color:#fff;
-// 	line-height:50px;
-// 	font-weight:bold;
-// 	padding:0 15px;
-// }
+a {
+	text-decoration: none;
+	&.active,
+	&:active,
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family:$roboto-condensed;
+}
+
+aside {
+	width:20%;
+	float:left;
+	background:darken($background,2);
+	height:100%;
+	position: relative;
+	.logo {
+		color:white;
+		font-size:18px;
+		text-transform: uppercase;
+		text-align: center;
+		display: block;
+		letter-spacing: 4px;
+		padding:20px 0;
+		font-family: $roboto-condensed;
+	}
+	#navigation {
+		.title {
+			padding-left: 20px;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-size: 12px;
+			color: #444;
+			margin-bottom:5px;
+			display: block;
+		}
+		ul {
+			list-style: none;
+			margin:0;
+			padding:0;
+			margin-bottom:40px;
+		}
+		a {
+			color:lighten($background,70);
+			font-family: $roboto-condensed;
+			// color:#ccc;
+			display: block;
+			padding:10px;
+			font-size:14px;
+			padding-left:30px;
+			text-transform: uppercase;
+			font-weight: 400;
+			letter-spacing: 2px;
+			@include transition(all 0.3s);
+			&.active,
+			&:hover {
+				// background:lighten($background,5);
+				box-shadow: inset 5px 0px #4A90E2;
+				// background:darken(#4A90E2,35);
+			}
+		}
+	}
+	footer {
+		position: absolute;
+		bottom: 0;
+		height: 100px;
+		width: 100%;
+	}
+}
+
+.btn-ghost {
+	border:1px solid white;
+	border-radius:0;
+	color:white;
+}
 
 .wrapper {
-	padding:10px 15px;
+	float:left;
+	width:80%;
+	.row {
+		margin:0;
+	}
+	header {
+		@include clearfix;
+		background:lighten($background, 5);
+		padding:20px;
+		.btn-ghost {
+			float:right;
+		}
+		ul {
+			margin:0;
+			padding:0;
+		}
+		li {
+			float:left;
+			list-style: none;
+			a {
+				padding:10px;
+				color:white;
+				display: block;
+				&.active {
+					background:#eee
+				}
+			}
+
+		}
+	}
+}
+
+.widget {
+	margin:20px;
+	// background:
+	padding:10px;
+	border-radius:4px;
 }
