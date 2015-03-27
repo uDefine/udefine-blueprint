@@ -12,6 +12,11 @@ $app-background: #111;
 $background: #232A34;
 $aside: #1B2028;
 
+* {
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
 html,
 body,
 div[app-wrapper] {
@@ -162,5 +167,29 @@ aside {
 		margin-top: 0;
 		text-transform: uppercase;
 		font-size: 16px;
+	}
+}
+
+.control {
+	display: block;
+	height: 20px;
+	padding:5px 10px;
+	span {
+		display: inline-block;
+		padding: 6px;
+		border-radius: 50%;
+		margin-right:5px;
+		// &:hover {
+		// 	cursor:pointer;
+		// }
+	}
+	.close-window {
+		background: #FF5F57;
+	}
+	.min {
+		background:#FFBD2E;
+	}
+	.max {
+		background:#29CB40;
 	}
 }
