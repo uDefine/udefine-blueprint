@@ -1,3 +1,18 @@
 // - - - - - - - - - - - - - - - - - - -
 // - - skin
 // global skin styles - gradients, colors, box-shadows, etc.
+
+
+.theme-white {
+	$app-background:#fff;
+	$aside: #eee;
+	div[app-wrapper] {
+		background:$app-background;
+	}
+	aside {
+		background:$aside;
+	}
+	.wrapper {
+		background:darken($app-background, 10);
+	}
+}

@@ -31,7 +31,9 @@
 		<![endif]-->
 	</head>
 	<body>
-		<aside class="sidebar" ui-view="sidebar"></aside>
-		<div class="wrapper" ui-view="body"></div>
+		<div app-wrapper>
+			<aside class="sidebar" ui-view="sidebar"></aside>
+			<div class="wrapper" ui-view="body"></div>
+		</div>
 	</body>
 </html>

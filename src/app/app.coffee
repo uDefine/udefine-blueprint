@@ -68,4 +68,10 @@ angular.module('app', [
 						'body@':
 							templateUrl: '/templates/stocks/stocks-view.html'
 				)
+				.state('app.login',
+					url: 'login'
+					views:
+						'body@':
+							templateUrl: '/templates/login/login-view.html'
+				)
 	)
